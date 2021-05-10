@@ -106,3 +106,9 @@ ftp     IN CNAME        www.soujeff.local.
 vim /etc/resolv.conf
 vim /etc/sysconfig/network-scripts/enp0s8
 ```
+# 8 - Adding new entrance on DNS zone
+
+```bash
+dnssec-signzone -S -z -o dominio.com.br db.dominio.com.br
+rndc reload
+```
