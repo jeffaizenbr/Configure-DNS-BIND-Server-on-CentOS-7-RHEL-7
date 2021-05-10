@@ -116,4 +116,10 @@ rndc reload
 Obs: to generating key tag and Digest key 
 dnssec-keygen -a NSEC3RSASHA1 -b 2048 -n ZONE example.com
 dnssec-keygen -f KSK -a NSEC3RSASHA1 -b 4096 -n ZONE example.com
+
+example by registro.br
+
+GERA = dnssec-keygen -r /dev/urandom -f KSK dominio.com.br
+ASSINA = dnssec-signzone -S -z -o dominio.com.br db.dominio.com.br
+CAPTURA KEYTAG E DIGEST = cat dsset-dominio.com.br. | head -1
 ```
