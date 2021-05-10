@@ -111,4 +111,9 @@ vim /etc/sysconfig/network-scripts/enp0s8
 ```bash
 dnssec-signzone -S -z -o dominio.com.br db.dominio.com.br
 rndc reload
+
+
+Obs: to generating key tag and Digest key 
+dnssec-keygen -a NSEC3RSASHA1 -b 2048 -n ZONE example.com
+dnssec-keygen -f KSK -a NSEC3RSASHA1 -b 4096 -n ZONE example.com
 ```
