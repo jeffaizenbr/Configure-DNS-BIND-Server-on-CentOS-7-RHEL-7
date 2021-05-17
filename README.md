@@ -38,17 +38,6 @@ options {
 
 
 
-zone "vlearning.com.kh" {
-     type master;
-     file "fwd.vlearning.com.kh"; #zone file path
-     allow-update { none; };
-};
-zone "168.168.192.in-addr.arpa" {
-     type master;
-     file "rev.168.168.192"; #192.168.168.0/24 subnet
-     allow-update { none; };
-};
-
 
 zone "soujeff.local" {
      type master;
