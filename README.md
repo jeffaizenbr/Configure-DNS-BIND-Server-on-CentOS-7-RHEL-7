@@ -67,27 +67,32 @@ zone "122.168.192.in-addr.arpa" {
 # 4 - Creating zone "SouJeff.Local in file /etc/named.conf"
 
 ```bash
-zone "soujeff.local" IN {
 
-         type master;
+$TTL 86400
+@                  IN     SOA      ns1.soujeff.local. root.soujeff.local. (
+                       000000005   ;Serial
+                       3600        ;Refresh
+                       1800        ;Retry
+                       604800      ;Expire
+                       86400       ;Minimum TTL
+)
+;; Name Servers forwarder
+@                  IN      NS      ns1.soujeff.local.
+@                  IN      NS      ns2.soujeff.local.
+@                  IN      A       192.168.122.13
+@                  IN      A       192.168.122.14
+ns1                IN      A       192.168.122.13
+ns2                IN      A       192.168.122.14
+jeff               IN      A       10.0.0.4
+jeff2              IN      A       10.0.0.5
+jeff3              IN      A       10.0.0.6
+pega               IN      A       10.0.0.7
+lula               IN      A       10.0.0.166
 
-         file "/var/named/soujeff.local.db";
 
-         allow-update { none; };
-};
-
-
-zone "122.168.192.in-addr.arpa" IN {
-
-          type master;
-
-          file "/var/named/192.168.122.db";
-
-          allow-update { none; };
-};
 ```
 
-# 5 - Creating forward-zone vim /var/named/soujeff.local.db
+# 5 - Creating forward-zone vim /var/named/
 
 ```bash
 @   IN  SOA     ns1.soujeff.local. root.soujeff.local. (
@@ -117,26 +122,29 @@ ftp     IN CNAME        www.soujeff.local.
 
 ```
 
-# 6 - Creating reverse-zone vim /var/named/192.168.122.db
+# 6 - Creating reverse-zone vim /var/named/rev.122.168.192
 
 ```bash
-@   IN  SOA     ns1.soujeff.local. root.soujeff.local. (
-                                                1001    ;Serial
-                                                3H      ;Refresh
-                                                15M     ;Retry
-                                                1W      ;Expire
-                                                1D      ;Minimum TTL
-                                                )
 
-;Name Server Information
-@ IN  NS      ns1.soujeff.local.
+$TTL 86400
+@                IN     SOA      ns1.soujeff.local. root.soujeff.local. (
+                    000000002    ;Serial
+                    3600         ;Refresh
+                    1800         ;Retry
+                    604800       ;Expire
+                    86400        ;Minimum TTL
+)
+;; Name Servers resolver
+@                IN      NS      ns1.vlearning.com.kh.
+@                IN      NS      ns2.vlearning.com.kh.
+@                IN      PTR     vlearning.com.kh.
+ns1              IN      A       192.168.122.13
+ns2              IN      A       192.168.122.14
+10               IN      PTR     ns1.vlearning.com.kh.
+20               IN      PTR     ns2.vlearning.com.kh.
+~
 
-;Reverse lookup for Name Server
-10        IN  PTR     ns1.soujeff.local.
 
-;PTR Record IP address to HostName
-100      IN  PTR     www.soujeff.local.
-150      IN  PTR     mail.soujeff.local.
 ```
 
 # 7 - Change resolv.conf and primary DNS
