@@ -16,13 +16,52 @@ yum install bind bind-utils
 # 3 - configure DNS configuration file /etc/named.conf
 
 ```bash
-// listen-on port 53 { 127.0.0.1; 192.168.122.13; };
-// listen-on-v6 port 53 { ::1; };
 
-listen-on port 53 { 127.0.0.1; 192.168.0.10; };
-allow-query     { localhost; 192.168.122.0/24; };
-allow-transfer { 192.168.122.14; };
-also-notify { 192.168.122.14; };
+
+options {
+        listen-on port 53 { 127.0.0.1; 192.168.122.13; };
+        listen-on-v6 port 53 { ::1; };
+        directory       "/var/named";
+        dump-file       "/var/named/data/cache_dump.db";
+        statistics-file "/var/named/data/named_stats.txt";
+        memstatistics-file "/var/named/data/named_mem_stats.txt";
+        recursing-file  "/var/named/data/named.recursing";
+        secroots-file   "/var/named/data/named.secroots";
+        allow-query     { localhost; 192.168.122.0/24; };
+        allow-transfer { 192.168.122.14; };
+        also-notify { 192.168.122.14; };
+
+        recursion yes;
+
+
+
+
+
+
+zone "vlearning.com.kh" {
+     type master;
+     file "fwd.vlearning.com.kh"; #zone file path
+     allow-update { none; };
+};
+zone "168.168.192.in-addr.arpa" {
+     type master;
+     file "rev.168.168.192"; #192.168.168.0/24 subnet
+     allow-update { none; };
+};
+
+
+zone "soujeff.local" {
+     type master;
+     file "soujeff.local"; #zone file path
+     allow-update { none; };
+};
+zone "122.168.192.in-addr.arpa" {
+     type master;
+     file "rev.122.168.192"; #192.168.168.0/24 subnet
+     allow-update { none; };
+};
+
+
 ```
 
 # 4 - Creating zone "SouJeff.Local in file /etc/named.conf"
